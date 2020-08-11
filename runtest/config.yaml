@@ -1,2 +1,11 @@
-test:
-  test2: 123
+ENV: release
+MySql:
+  Invoices:
+    path: '115.29.150.148:3306'
+    username: root
+    password: 'geeRan1001'
+    db_name: 'invoices'
+    config: 'charset=utf8&parseTime=True&loc=Local'
+    max-idle-conns: 10
+    max-open-conns: 10
+    log-mode: false

@@ -5,7 +5,8 @@ import (
 	"fmt"
 )
 
-func main()  {
+func main() {
+	fmt.Println(global.GVA_CONFIG.SysSetting.Env)
 	fmt.Println(global.GVA_CONFIG.Setting)
 	fmt.Println(global.GVA_CONFIG.Setting.GetChild("test").GetInt("test2"))
 }
