@@ -20,7 +20,10 @@ func InitMySql(c *config.Config) *MySql {
 			return
 		}
 	}()
-	mysql_s := c.Setting.GetChild("mysql")
+	mysql_s := c.Setting.GetChildd("mysql")
+	if mysql_s == nil {
+		return nil
+	}
 	for k,_ := range *mysql_s {
 		s := mysql_s.GetChild(k)
 		username,password,path := s.GetStringd("username","root"),s.GetString("password"),s.GetString("path")

@@ -99,3 +99,10 @@ func (s *settings)GetStringd(key string,d string) string {
 func (s *settings)GetBoold(key string,d bool) bool {
 	return s.Getd(key,d).(bool)
 }
+func (s *settings)GetChildd(key string) *settings {
+	v := s.Getd(key,nil)
+	if v == nil {
+		return nil
+	}
+	return v.(*settings)
+}
