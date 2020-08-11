@@ -1,7 +1,8 @@
 package test
 
 import (
-	"enze/global"
+	_ "github.com/whileW/enze-global/test/app"
+	"github.com/whileW/enze-global"
 	"fmt"
 	"testing"
 )

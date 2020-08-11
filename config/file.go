@@ -4,14 +4,15 @@ import (
 	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
+	"strings"
 )
 
 func initFile(config *Config) {
-	if config.SysSetting.ConfFileName == "" {
-		config.SysSetting.ConfFileName = "config.yaml"
+	if config.SysSetting.ConfFilePath == "" {
+		config.SysSetting.SetDefaultConfFileName()
 	}
 	v := viper.New()
-	v.SetConfigFile(config.SysSetting.ConfFileName)
+	v.SetConfigFile(config.SysSetting.ConfFilePath)
 	err := v.ReadInConfig()
 	if err != nil {
 		fmt.Println("Fatal error config file: %s \n", err)
@@ -20,14 +21,17 @@ func initFile(config *Config) {
 	v.WatchConfig()
 	v.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("config file changed:", e.Name)
-		analysis_setting(&config.Setting,v.AllSettings(),0)
+		analysis_setting(config,&config.Setting,v.AllSettings(),0)
 	})
-	analysis_setting(&config.Setting,v.AllSettings(),0)
+	analysis_setting(config,&config.Setting,v.AllSettings(),0)
 	config.vp = v
 }
 //解析配置
-func analysis_setting(t *settings,s map[string]interface{},h int)  {
+func analysis_setting(config *Config,t *settings,s map[string]interface{},h int)  {
 	for k,v := range s {
+		if h == 0 {
+			set_sys_setting(config,k,v)
+		}
 		ss := setting{
 			Key:k,
 		}
@@ -35,11 +39,28 @@ func analysis_setting(t *settings,s map[string]interface{},h int)  {
 			if d,ok:=v.(map[string]interface{});ok {
 				ts := &settings{}
 				ss.Value = ts
-				analysis_setting(ts,d,h+1)
+				analysis_setting(config,ts,d,h+1)
 			}else {
 				ss.Value = v
 			}
 		}
 		(*t)[k] = ss
+	}
+}
+func set_sys_setting(config *Config,k string,v interface{})  {
+	uk := strings.ToUpper(k)
+	if d,ok := v.(string);ok {
+		if config.SysSetting.Env == "" && uk == "ENV" {
+			config.SysSetting.Env = d
+			return
+		}
+		if config.SysSetting.HttpAddr == "" && uk == "HTTPADDR"{
+			config.SysSetting.HttpAddr = d
+			return
+		}
+		if config.SysSetting.RpcAddr == "" && uk == "RPCADDR"{
+			config.SysSetting.RpcAddr = d
+			return
+		}
 	}
 }

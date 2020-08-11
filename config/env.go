@@ -4,5 +4,7 @@ import "os"
 
 func initEnv(config *Config) {
 	config.SysSetting.Env = os.Getenv("ENV")
-	config.SysSetting.ConfFileName = os.Getenv("CFNAME")
+	config.SysSetting.ConfFilePath = os.Getenv("CFNAME")
+	config.SysSetting.HttpAddr = os.Getenv("HTTPADDR")
+	config.SysSetting.RpcAddr = os.Getenv("RPCADDR")
 }

@@ -9,3 +9,7 @@ MySql:
     max-idle-conns: 10
     max-open-conns: 10
     log-mode: false
+  Huatu:
+    path: '115.29.150.148:3306'
+    password: 'geeRan1001'
+    db_name: 'huatu'

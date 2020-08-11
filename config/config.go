@@ -1,5 +1,12 @@
 package config
 
+var conf Config
+
+func init()  {
+	//初始化settins
+	conf.Setting = settings{}
+}
+
 func InitConfg() *Config {
 	//环境变量加载配置
 	initEnv(&conf)
@@ -8,5 +15,7 @@ func InitConfg() *Config {
 	//配置文件
 	initFile(&conf)
 	//配置中心
+	//设置默认值
+	conf.SysSetting.SetDefault()
 	return &conf
 }
