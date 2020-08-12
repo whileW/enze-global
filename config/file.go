@@ -15,7 +15,7 @@ func initFile(config *Config) {
 	v.SetConfigFile(config.SysSetting.ConfFilePath)
 	err := v.ReadInConfig()
 	if err != nil {
-		fmt.Println("Fatal error config file: %s \n", err)
+		fmt.Sprintf("Fatal error config file: %s \n", err)
 		return
 	}
 	v.WatchConfig()
