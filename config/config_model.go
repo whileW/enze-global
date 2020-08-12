@@ -14,6 +14,7 @@ type Config struct {
 //系统设置
 type sysSetting struct {
 	//环境 - 默认debug
+	//dev	-	开发
 	//debug - 测试
 	//release - 正式
 	Env 			string
