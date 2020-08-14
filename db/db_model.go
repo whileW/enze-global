@@ -1,4 +1,4 @@
-package mysql
+package db
 
 import (
 	"fmt"
@@ -6,21 +6,25 @@ import (
 	"os"
 )
 
-type MySql struct {
-	mysqls 			map[string]*gorm.DB		//mysql 链接
+type DB struct {
+	dbs 			map[string]*gorm.DB		//db 链接
 }
 
-func NewMySql() *MySql {
-	return &MySql{
-		mysqls: map[string]*gorm.DB{},
+func NewDB() *DB {
+	return &DB{
+		dbs: map[string]*gorm.DB{},
 	}
 }
 
-func (m *MySql)Get(name string) *gorm.DB {
-	if v,ok := m.mysqls[name];ok {
+func (m *DB)Set(name string,db *gorm.DB)  {
+	m.dbs[name] = db
+}
+
+func (m *DB)Get(name string) *gorm.DB {
+	if v,ok := m.dbs[name];ok {
 		return v
 	}else {
-		fmt.Println("没有该MySql实例")
+		fmt.Println("没有该DB实例")
 		os.Exit(0)
 		return nil
 	}

@@ -6,6 +6,7 @@
 
 .DS_Store
 
+config.yaml
 # local env files
 .env.local
 .env.*.local
