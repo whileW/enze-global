@@ -7,7 +7,7 @@ import (
 //总配置
 type Config struct {
 	SysSetting			sysSetting
-	Setting				settings
+	Setting				Settings
 	vp     				*viper.Viper
 }
 
@@ -58,52 +58,52 @@ func (s *sysSetting)SetDefault()  {
 }
 
 //其他设置
-type settings map[string]setting
-type setting struct {
+type Settings map[string]Setting
+type Setting struct {
 	Key 		string
 	Value 		interface{}
 }
 
-func (s *settings)Get(key string) interface{} {
+func (s *Settings)Get(key string) interface{} {
 	if v, ok := (*s)[key]; ok {
 		return v.Value
 	} else {
 		panic("key not find")
 	}
 }
-func (s *settings)GetInt(key string) int {
+func (s *Settings)GetInt(key string) int {
 	return s.Get(key).(int)
 }
-func (s *settings)GetString(key string) string {
+func (s *Settings)GetString(key string) string {
 	return s.Get(key).(string)
 }
-func (s *settings)GetBool(key string) bool {
+func (s *Settings)GetBool(key string) bool {
 	return s.Get(key).(bool)
 }
-func (s *settings)GetChild(key string) *settings {
-	return s.Get(key).(*settings)
+func (s *Settings)GetChild(key string) *Settings {
+	return s.Get(key).(*Settings)
 }
 
-func (s *settings)Getd(key string,d interface{})interface{} {
+func (s *Settings)Getd(key string,d interface{})interface{} {
 	if v, ok := (*s)[key]; ok {
 		return v.Value
 	} else {
 		return d
 	}
 }
-func (s *settings)GetIntd(key string,d int) int {
+func (s *Settings)GetIntd(key string,d int) int {
 	return s.Getd(key,d).(int)
 }
-func (s *settings)GetStringd(key string,d string) string {
+func (s *Settings)GetStringd(key string,d string) string {
 	return s.Getd(key,d).(string)
 }
-func (s *settings)GetBoold(key string,d bool) bool {
+func (s *Settings)GetBoold(key string,d bool) bool {
 	return s.Getd(key,d).(bool)
 }
-func (s *settings)GetChildd(key string) *settings {
+func (s *Settings)GetChildd(key string) *Settings {
 	v := s.Getd(key,nil)
 	if v == nil {
 		return nil
 	}
-	return v.(*settings)
+	return v.(*Settings)
 }

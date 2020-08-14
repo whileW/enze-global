@@ -4,7 +4,7 @@ var conf Config
 
 func init()  {
 	//初始化settins
-	conf.Setting = settings{}
+	conf.Setting = Settings{}
 }
 
 func InitConfg() *Config {

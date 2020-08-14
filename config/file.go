@@ -27,17 +27,17 @@ func initFile(config *Config) {
 	config.vp = v
 }
 //解析配置
-func analysis_setting(config *Config,t *settings,s map[string]interface{},h int)  {
+func analysis_setting(config *Config,t *Settings,s map[string]interface{},h int)  {
 	for k,v := range s {
 		if h == 0 {
 			set_sys_setting(config,k,v)
 		}
-		ss := setting{
+		ss := Setting{
 			Key:k,
 		}
 		if v != nil {
 			if d,ok:=v.(map[string]interface{});ok {
-				ts := &settings{}
+				ts := &Settings{}
 				ss.Value = ts
 				analysis_setting(config,ts,d,h+1)
 			}else {
