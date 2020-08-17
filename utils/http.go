@@ -52,6 +52,7 @@ type http_client struct {
 	client  		*http.Client
 	req 			*http.Request
 	content_type	string
+	charset			string
 }
 type http_method string
 var (
@@ -113,11 +114,18 @@ func (hc *http_client)SetConetentType(content_type string) *http_client {
 	hc.content_type = content_type
 	return hc
 }
+func (hc *http_client)SetCharset(charset string) *http_client {
+	hc.charset = charset
+	return hc
+}
 func (hc *http_client)Do() ([]byte,error) {
 	if hc.content_type == "" {
 		hc.SetConetentType("json")
 	}
-	hc.SetHeader("Content-Type",hc.content_type)
+	if hc.charset == "" {
+		hc.SetCharset("UTF-8")
+	}
+	hc.SetHeader("Content-Type",hc.content_type+" ;charset="+hc.charset)
 
 	resp, err := hc.client.Do(hc.req)
 	if err != nil {
