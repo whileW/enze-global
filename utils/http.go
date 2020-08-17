@@ -114,6 +114,11 @@ func (hc *http_client)SetConetentType(content_type string) *http_client {
 	return hc
 }
 func (hc *http_client)Do() ([]byte,error) {
+	if hc.content_type == "" {
+		hc.SetConetentType("json")
+	}
+	hc.SetHeader("Content-Type",hc.content_type)
+
 	resp, err := hc.client.Do(hc.req)
 	if err != nil {
 		return nil,err
