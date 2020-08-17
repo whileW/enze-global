@@ -6,7 +6,7 @@ import (
 	"encoding/base64"
 )
 
-func aes_decrypt(Input string,Iv,Key []byte) ([]byte,error) {
+func AesDecrypt(Input string,Iv,Key []byte) ([]byte,error) {
 	block, err := aes.NewCipher(Key)
 	if err != nil {
 		return nil,err
