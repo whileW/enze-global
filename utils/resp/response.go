@@ -20,10 +20,15 @@ type PageResult struct {
 
 type ResCode int
 const (
-	ERROR   		ResCode			= 	500
 	SUCCESS 		ResCode			= 	0
+	//服务器内部逻辑异常
+	ERROR   		ResCode			= 	500
+	//请求参数检查错误
+	ParamterError	ResCode			=	501
 	NoFind			ResCode			=	404
+	//登陆异常
 	LoginFailure	ResCode			=	401
+	//鉴权失败
 	Unauthorized	ResCode			=	402
 )
 
