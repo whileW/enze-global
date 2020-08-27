@@ -28,4 +28,5 @@ func Db()  {
 			break
 		}
 	}
+	global.GVA_DB.IsInit = true
 }

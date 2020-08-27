@@ -7,6 +7,7 @@ import (
 )
 
 type DB struct {
+	IsInit			bool					//是否初始化
 	dbs 			map[string]*gorm.DB		//db 链接
 }
 

@@ -8,5 +8,4 @@ import (
 func main() {
 	fmt.Println(global.GVA_CONFIG.SysSetting)
 	fmt.Println(global.GVA_CONFIG.Setting)
-	fmt.Println(global.GVA_MYSQL)
 }
