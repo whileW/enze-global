@@ -38,6 +38,11 @@ func Result(c *gin.Context,ResCode ResCode,ResMsg string,ResData interface{})  {
 		Msg:ResMsg,
 		Data:ResData,
 	})
+	c.Abort()
+}
+func NoFindResult(c *gin.Context)  {
+	c.Status(http.StatusNotFound)
+	c.Abort()
 }
 func Ok(c *gin.Context)  {
 	Result(c,SUCCESS,"操作成功",nil)
