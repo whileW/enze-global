@@ -13,15 +13,18 @@ import (
 // @param     path            string
 // @return    err             error
 
-func PathExists(path string) (bool, error) {
+func PathExists(path string) (error) {
 	_, err := os.Stat(path)
 	if err == nil {
-		return true, nil
+		return nil
 	}
 	if os.IsNotExist(err) {
-		return false, nil
+		if err := os.MkdirAll(path,os.ModeDir);err != nil{
+			return err
+		}
+		return nil
 	}
-	return false, err
+	return err
 }
 
 // @title    createDir
@@ -32,15 +35,14 @@ func PathExists(path string) (bool, error) {
 
 func CreateDir(dirs ...string) (err error) {
 	for _, v := range dirs {
-		exist, err := PathExists(v)
+		err := PathExists(v)
 		if err != nil {
-			return err
-		}
-		if !exist {
-			err = os.MkdirAll(v, os.ModePerm)
+			err = os.MkdirAll(v, os.ModeDir)
 			if err != nil {
 				return err
 			}
+		}else {
+			return nil
 		}
 	}
 	return err
