@@ -9,7 +9,7 @@ import (
 )
 
 func TestFifo(t *testing.T)  {
-	f := cache.NewFifo(10)
+	f := cache.NewFifo()
 	for i:=0 ;i<2000000 ;i++  {
 		f.Push(strconv.Itoa(i),i)
 	}

@@ -8,7 +8,7 @@ import (
 
 //先进先出
 
-type fifo_cache struct {
+type FifoCache struct {
 	capacity 	int
 	length 		int
 
@@ -21,8 +21,8 @@ type fifo_data struct {
 	v 			interface{}
 }
 
-func NewFifo() *fifo_cache {
-	return &fifo_cache{
+func NewFifo() *FifoCache {
+	return &FifoCache{
 		length:   0,
 		capacity: global.GVA_CONFIG.Setting.GetIntd("fifo_cap",10000),
 		list:     list.New(),
@@ -31,7 +31,7 @@ func NewFifo() *fifo_cache {
 	}
 }
 
-func (f *fifo_cache)Get(key string) interface{} {
+func (f *FifoCache)Get(key string) interface{} {
 	f.rw_lock.RLock()
 	defer f.rw_lock.RUnlock()
 	if elem, ok := f.cache[key]; ok {
@@ -40,7 +40,7 @@ func (f *fifo_cache)Get(key string) interface{} {
 	return nil
 }
 
-func (f *fifo_cache)Push(k string,v interface{}) {
+func (f *FifoCache)Push(k string,v interface{}) {
 	f.rw_lock.Lock()
 	defer f.rw_lock.Unlock()
 	if f.length == f.capacity {
@@ -51,7 +51,7 @@ func (f *fifo_cache)Push(k string,v interface{}) {
 	f.length++
 }
 
-func (f *fifo_cache)pull()  {
+func (f *FifoCache)pull()  {
 	e := f.list.Back()
 	delete(f.cache, e.Value.(fifo_data).k)
 	f.list.Remove(e)
