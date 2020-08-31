@@ -2,6 +2,7 @@ package cache
 
 import (
 	"container/list"
+	"github.com/whileW/enze-global"
 	"sync"
 )
 
@@ -20,10 +21,10 @@ type fifo_data struct {
 	v 			interface{}
 }
 
-func NewFifo(capacity int) *fifo_cache {
+func NewFifo() *fifo_cache {
 	return &fifo_cache{
 		length:   0,
-		capacity: capacity,
+		capacity: global.GVA_CONFIG.Setting.GetIntd("fifo_cap",10000),
 		list:     list.New(),
 		cache:    make(map[string]*list.Element),
 		rw_lock:  &sync.RWMutex{},
