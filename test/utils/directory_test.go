@@ -14,6 +14,6 @@ func TestGetCurrentDirectory(t *testing.T)  {
 }
 
 func TestCreateDir(t *testing.T)  {
-	err := utils.CreateDir("/upload/"+time.Now().Format("20060102"))
+	err := utils.CreateDir("upload/"+time.Now().Format("20060102"))
 	fmt.Println(err)
 }
