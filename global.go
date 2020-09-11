@@ -3,6 +3,7 @@ package global
 import (
 	"github.com/whileW/enze-global/config"
 	"github.com/whileW/enze-global/db"
+	"github.com/whileW/enze-global/etcd"
 	"github.com/whileW/enze-global/log"
 )
 
@@ -13,6 +14,8 @@ var (
 	GVA_LOG		*log.Log
 	//Db
 	GVA_DB 		*db.DB
+	//ETCD
+	GVA_ETCD	*etcd.Etcd
 )
 
 func init() {
