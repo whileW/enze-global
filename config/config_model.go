@@ -24,6 +24,8 @@ type sysSetting struct {
 	HttpAddr		string
 	//rpc 监听端口地址 - 默认30010
 	RpcAddr 		string
+	//本机ip
+	Host 			string
 }
 
 //设置默认配置文件地址
@@ -50,11 +52,18 @@ func (s *sysSetting)SetDefaultRpcAddr() {
 		s.HttpAddr = "30010"
 	}
 }
+//设置默认host
+func (s *sysSetting)SetDefaultHost()  {
+	if s.Host == "" {
+		s.Host = "127.0.0.1"
+	}
+}
 //设置默认值
 func (s *sysSetting)SetDefault()  {
 	s.SetDefaultEnv()
 	s.SetDefaultHttpAddr()
 	s.SetDefaultRpcAddr()
+	s.SetDefaultHost()
 }
 
 //其他设置

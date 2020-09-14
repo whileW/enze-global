@@ -7,4 +7,5 @@ func initEnv(config *Config) {
 	config.SysSetting.ConfFilePath = os.Getenv("CFNAME")
 	config.SysSetting.HttpAddr = os.Getenv("HTTPADDR")
 	config.SysSetting.RpcAddr = os.Getenv("RPCADDR")
+	config.SysSetting.Host = os.Getenv("HOST")
 }

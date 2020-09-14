@@ -9,6 +9,7 @@ var (
 	_conf_file_path string
 	_http_addr 		string
 	_rpc_addr		string
+	_host			string
 )
 
 func initCommand(config *Config) {
@@ -16,6 +17,7 @@ func initCommand(config *Config) {
 	flag.StringVar(&_conf_file_path, "f", "", "配置文件地址")
 	flag.StringVar(&_http_addr, "ha", "", "http监听地址")
 	flag.StringVar(&_rpc_addr, "ra", "", "rpc监听地址")
+	flag.StringVar(&_host,"h","","本机ip地址")
 	if !flag.Parsed() {
 		flag.Parse()
 	}
@@ -30,5 +32,8 @@ func initCommand(config *Config) {
 	}
 	if _rpc_addr != "" && config.SysSetting.RpcAddr == "" {
 		config.SysSetting.RpcAddr = _rpc_addr
+	}
+	if _host != "" && config.SysSetting.Host == "" {
+		config.SysSetting.Host = _host
 	}
 }

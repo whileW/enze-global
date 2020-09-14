@@ -62,5 +62,9 @@ func set_sys_setting(config *Config,k string,v interface{})  {
 			config.SysSetting.RpcAddr = d
 			return
 		}
+		if config.SysSetting.Host == "" && uk == "HOST" {
+			config.SysSetting.Host = d
+			return
+		}
 	}
 }
