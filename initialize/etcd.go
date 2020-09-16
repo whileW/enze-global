@@ -20,3 +20,15 @@ func Etcd()  {
 	}
 	global.GVA_ETCD = &etcd.Etcd{Cli:cli,IsInit:true}
 }
+
+func RegisterByEtcd(app_name string)  {
+	conf := global.GVA_CONFIG
+	end_ch := make(chan int)
+	global.GVA_ETCD.PutLease(app_name,conf.SysSetting.Host,500,end_ch)
+	go func(chan<- int) {
+		select {
+		case <-end_ch:
+			panic("etcd lease end")
+		}
+	}(end_ch)
+}

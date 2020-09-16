@@ -2,7 +2,6 @@ package etcd
 
 import (
 	"context"
-	"fmt"
 	"github.com/etcd-io/etcd/clientv3"
 	"time"
 )
@@ -41,7 +40,7 @@ func (e *Etcd)GetWithPrefix(k string) (map[string]string,error) {
 	return resp,err
 }
 
-func (e *Etcd)PutLease(k,v string,ttl int64) (*clientv3.PutResponse,error) {
+func (e *Etcd)PutLease(k,v string,ttl int64,end_cn chan<- int) (*clientv3.PutResponse,error) {
 	grantResp, err := e.Cli.Lease.Grant(context.TODO(), ttl)
 	if err != nil {
 		return nil,err
@@ -51,12 +50,12 @@ func (e *Etcd)PutLease(k,v string,ttl int64) (*clientv3.PutResponse,error) {
 	if err == nil {
 		KeepaliveChan, err :=e.Cli.Lease.KeepAlive(context.TODO(),grantResp.ID)
 		if err == nil{
-			go keepaliveChanShow(KeepaliveChan,ttl,k)
+			go keepaliveChanShow(KeepaliveChan,ttl,k,end_cn)
 		}
 	}
 	return pr,err
 }
-func keepaliveChanShow(clk <-chan *clientv3.LeaseKeepAliveResponse,ttl int64,key string)  {
+func keepaliveChanShow(clk <-chan *clientv3.LeaseKeepAliveResponse,ttl int64,key string,end_cn chan<- int)  {
 	timer := time.NewTimer(time.Duration(ttl)*time.Second)
 	for {
 		select {
@@ -64,7 +63,7 @@ func keepaliveChanShow(clk <-chan *clientv3.LeaseKeepAliveResponse,ttl int64,key
 			timer.Reset(time.Duration(ttl)*time.Second)
 			break
 		case <-timer.C:
-			fmt.Println("结束续期")
+			end_cn<-1
 			break
 		}
 	}
