@@ -4,6 +4,7 @@ import (
 	"github.com/etcd-io/etcd/clientv3"
 	"github.com/whileW/enze-global"
 	"github.com/whileW/enze-global/etcd"
+	"github.com/whileW/enze-global/utils"
 	"strings"
 	"time"
 )
@@ -23,8 +24,16 @@ func Etcd()  {
 
 func RegisterByEtcdRPC(app_name string)  {
 	conf := global.GVA_CONFIG
+	register_by_etcd(app_name+"/rpc/"+utils.RandomString(10),conf.SysSetting.Host+":"+conf.SysSetting.RpcAddr)
+}
+func RegisterByEtcdHTTP(app_name string)  {
+	conf := global.GVA_CONFIG
+	register_by_etcd(app_name+"/http/"+utils.RandomString(10),conf.SysSetting.Host+":"+conf.SysSetting.HttpAddr)
+}
+
+func register_by_etcd(name,host string)  {
 	end_ch := make(chan int)
-	global.GVA_ETCD.PutLease(app_name,conf.SysSetting.Host+":"+conf.SysSetting.RpcAddr,500,end_ch)
+	global.GVA_ETCD.PutLease(name,host,500,end_ch)
 	go func(chan<- int) {
 		select {
 		case <-end_ch:
