@@ -1,9 +1,7 @@
 package db
 
 import (
-	"fmt"
 	"github.com/jinzhu/gorm"
-	"os"
 )
 
 type DB struct {
@@ -25,8 +23,7 @@ func (m *DB)Get(name string) *gorm.DB {
 	if v,ok := m.dbs[name];ok {
 		return v
 	}else {
-		fmt.Println("没有该DB实例")
-		os.Exit(0)
+		panic("没有该DB实例")
 		return nil
 	}
 }
