@@ -11,11 +11,9 @@ type Response struct {
 	Msg  	string      	`json:"msg"`
 }
 
-type PageResult struct {
-	List     interface{} `json:"list"`
-	Total    int         `json:"total"`
-	Page     int         `json:"page"`
-	PageSize int         `json:"pageSize"`
+type BasePageModel struct {
+	Data		interface{}			`json:"data"`
+	Count		int					`json:"count"`
 }
 
 type ResCode int
