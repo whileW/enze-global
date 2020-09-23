@@ -70,7 +70,9 @@ func Draw(img image.Image,r image.Image,x,y,w,h int) image.Image {
 	}
 	if _,ok := img.(*image.YCbCr);ok {
 		b := img.Bounds()
-		img = image.NewRGBA(image.Rect(0,0,b.Dx(),b.Dy()))
+		m := image.NewRGBA(image.Rect(0,0,b.Dx(),b.Dy()))
+		draw.Draw(m,img.Bounds(),img,b.Min ,draw.Src)
+		img = m
 	}
 	draw.Draw(img.(draw.Image),r1,r,r1.Min,draw.Src)
 	draw.Draw(img.(draw.Image),r2,r,r2.Min,draw.Src)
