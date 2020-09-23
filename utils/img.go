@@ -22,6 +22,9 @@ func LoadImg(r io.Reader) (image.Image,string, error) {
 	}
 	return src,aa, nil
 }
+func ImgToReader(img image.Image) *bytes.Reader {
+	return bytes.NewReader(EncodeImg(img))
+}
 func EncodeImg(img image.Image) []byte {
 	i := bytes.NewBuffer(nil)
 	jpeg.Encode(i,img,nil)
