@@ -13,12 +13,19 @@ import (
 	"io"
 )
 
-func LoadImg(r io.Reader) (image.Image, error) {
-	src, _, err := image.Decode(r)
+//加载图片
+//返回 图片、图片类型、错误
+func LoadImg(r io.Reader) (image.Image,string, error) {
+	src, aa, err := image.Decode(r)
 	if err != nil {
-		return nil, errors.New("image decode err :" + err.Error())
+		return nil,aa, errors.New("image decode err :" + err.Error())
 	}
-	return src, nil
+	return src,aa, nil
+}
+func EncodeImg(img image.Image) io.Reader {
+	i := bytes.NewBuffer(nil)
+	jpeg.Encode(i,img,nil)
+	return i
 }
 func ImgToBase64(img image.Image) string {
 	emptyBuff := bytes.NewBuffer(nil)
