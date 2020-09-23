@@ -28,7 +28,7 @@ func TestPostWithJson(t *testing.T)  {
 	test_req_body := test_req_body_struct{
 		Test:"test",
 	}
-	resp,err := utils.PostWithJson("http://www.baidu.com","",test_req_body)
+	resp,err := utils.PostWithJson("http://www.baidu.com",test_req_body)
 	if err != nil {
 		t.Log(err.Error())
 	}

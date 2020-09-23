@@ -26,7 +26,7 @@ func Post(url, contentType string, req_body []byte) ([]byte,error) {
 	}
 	return ioutil.ReadAll(resp.Body)
 }
-func PostWithJson(url, contentType string, req_body interface{}) (result []byte,err error) {
+func PostWithJson(url string, req_body interface{}) (result []byte,err error) {
 	req_body_byte := []byte{}
 	if req_body != nil {
 		req_body_byte,err = json.Marshal(req_body)
@@ -36,9 +36,17 @@ func PostWithJson(url, contentType string, req_body interface{}) (result []byte,
 	}else {
 		req_body_byte = nil
 	}
-	return Post(url,contentType,req_body_byte)
+	return Post(url,"application/json",req_body_byte)
 }
-
+func PostWithForm(url string,req_body map[string]string) (result []byte,err error) {
+	req_body_string := ""
+	if req_body != nil {
+		for k,v := range req_body {
+			req_body_string += k+"="+v+"&"
+		}
+	}
+	return Post(url,"application/x-www-form-urlencoded",[]byte(req_body_string))
+}
 func Get(url string) ([]byte,error) {
 	resp,err := http.Get(url)
 	if err != nil {
