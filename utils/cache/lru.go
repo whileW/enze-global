@@ -49,9 +49,19 @@ func (f *LRUCache)Push(k string,v interface{}) {
 	f.length++
 }
 
-func (f *LRUCache)pull()  {
+func (f *LRUCache)pull() {
 	e := f.list.Back()
 	delete(f.cache, e.Value.(data).k)
 	f.list.Remove(e)
 	f.length--
+}
+
+func (f *LRUCache)Remove(k string)  {
+	f.rw_lock.Lock()
+	defer f.rw_lock.Unlock()
+	if elem, ok := f.cache[k]; ok {
+		f.list.Remove(elem)
+		delete(f.cache,k)
+		f.length--
+	}
 }
