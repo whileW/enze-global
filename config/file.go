@@ -31,6 +31,7 @@ func analysis_setting(config *Config,t *Settings,s map[string]interface{},h int)
 	for k,v := range s {
 		if h == 0 {
 			set_sys_setting(config,k,v)
+			continue
 		}
 		ss := Setting{
 			Key:k,
