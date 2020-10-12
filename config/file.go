@@ -49,23 +49,27 @@ func analysis_setting(config *Config,t *Settings,s map[string]interface{},h int)
 }
 func set_sys_setting(config *Config,k string,v interface{})  {
 	uk := strings.ToUpper(k)
-	fmt.Println(uk)
-	if d,ok := v.(string);ok {
-		if uk == "ENV" && d != "" {
-			config.SysSetting.Env = d
-			return
+	//val := v.(string)
+	switch uk {
+	case "ENV":
+		if val,ok := v.(string);ok {
+			config.SysSetting.Env = val
 		}
-		if uk == "HTTPADDR" && d != ""{
-			config.SysSetting.HttpAddr = d
-			return
+		break
+	case "HTTPADDR":
+		if val,ok := v.(int);ok {
+			config.SysSetting.Env = string(val)
 		}
-		if uk == "RPCADDR" && d != ""{
-			config.SysSetting.RpcAddr = d
-			return
+		break
+	case "RPCADDR":
+		if val,ok := v.(int);ok {
+			config.SysSetting.RpcAddr = string(val)
 		}
-		if uk == "HOST" && d != "" {
-			config.SysSetting.Host = d
-			return
+		break
+	case "HOST":
+		if val,ok := v.(string);ok {
+			config.SysSetting.Host = val
 		}
+		break
 	}
 }
