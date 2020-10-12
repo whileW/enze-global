@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
+	"strconv"
 	"strings"
 )
 
@@ -58,12 +59,12 @@ func set_sys_setting(config *Config,k string,v interface{})  {
 		break
 	case "HTTPADDR":
 		if val,ok := v.(int);ok {
-			config.SysSetting.Env = string(val)
+			config.SysSetting.Env = strconv.Itoa(val)
 		}
 		break
 	case "RPCADDR":
 		if val,ok := v.(int);ok {
-			config.SysSetting.RpcAddr = string(val)
+			config.SysSetting.RpcAddr = strconv.Itoa(val)
 		}
 		break
 	case "HOST":
