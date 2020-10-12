@@ -59,7 +59,7 @@ func set_sys_setting(config *Config,k string,v interface{})  {
 		break
 	case "HTTPADDR":
 		if val,ok := v.(int);ok {
-			config.SysSetting.Env = strconv.Itoa(val)
+			config.SysSetting.HttpAddr = strconv.Itoa(val)
 		}
 		break
 	case "RPCADDR":
