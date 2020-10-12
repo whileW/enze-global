@@ -21,19 +21,19 @@ func initCommand(config *Config) {
 	if !flag.Parsed() {
 		flag.Parse()
 	}
-	if _env != "" && config.SysSetting.Env == "" {
+	if _env != "" {
 		config.SysSetting.Env = _env
 	}
-	if _conf_file_path != "" && config.SysSetting.ConfFilePath == "" {
+	if _conf_file_path != "" {
 		config.SysSetting.ConfFilePath = _conf_file_path
 	}
-	if _http_addr != "" && config.SysSetting.HttpAddr == "" {
+	if _http_addr != "" {
 		config.SysSetting.HttpAddr = _http_addr
 	}
-	if _rpc_addr != "" && config.SysSetting.RpcAddr == "" {
+	if _rpc_addr != "" {
 		config.SysSetting.RpcAddr = _rpc_addr
 	}
-	if _host != "" && config.SysSetting.Host == "" {
+	if _host != "" {
 		config.SysSetting.Host = _host
 	}
 }
