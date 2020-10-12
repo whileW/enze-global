@@ -49,10 +49,10 @@ func analysis_setting(config *Config,t *Settings,s map[string]interface{},h int)
 }
 func set_sys_setting(config *Config,k string,v interface{})  {
 	uk := strings.ToUpper(k)
+	fmt.Println(uk)
 	if d,ok := v.(string);ok {
 		if uk == "ENV" && d != "" {
 			config.SysSetting.Env = d
-			fmt.Println(d)
 			return
 		}
 		if uk == "HTTPADDR" && d != ""{
