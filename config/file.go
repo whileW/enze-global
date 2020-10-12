@@ -50,19 +50,20 @@ func analysis_setting(config *Config,t *Settings,s map[string]interface{},h int)
 func set_sys_setting(config *Config,k string,v interface{})  {
 	uk := strings.ToUpper(k)
 	if d,ok := v.(string);ok {
-		if uk == "ENV" {
+		if uk == "ENV" && d != "" {
 			config.SysSetting.Env = d
+			fmt.Println(d)
 			return
 		}
-		if uk == "HTTPADDR"{
+		if uk == "HTTPADDR" && d != ""{
 			config.SysSetting.HttpAddr = d
 			return
 		}
-		if uk == "RPCADDR"{
+		if uk == "RPCADDR" && d != ""{
 			config.SysSetting.RpcAddr = d
 			return
 		}
-		if uk == "HOST" {
+		if uk == "HOST" && d != "" {
 			config.SysSetting.Host = d
 			return
 		}
