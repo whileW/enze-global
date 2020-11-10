@@ -1,6 +1,7 @@
 package global
 
 import (
+	"github.com/gomodule/redigo/redis"
 	"github.com/whileW/enze-global/config"
 	"github.com/whileW/enze-global/db"
 	"github.com/whileW/enze-global/etcd"
@@ -16,6 +17,8 @@ var (
 	GVA_DB 		*db.DB
 	//ETCD
 	GVA_ETCD	*etcd.Etcd
+	//REDIS
+	GVA_REDIS	*redis.Pool
 )
 
 func init() {
