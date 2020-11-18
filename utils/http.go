@@ -3,7 +3,10 @@ package utils
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"io"
 	"io/ioutil"
+	"mime/multipart"
 	"net/http"
 	"strings"
 )
@@ -88,7 +91,29 @@ func NewHttpClientWithJson(method http_method,url string, req_body interface{}) 
 	}else {
 		req_body_byte = nil
 	}
-	return NewHttpClient(method,url,req_body_byte),nil
+	c := NewHttpClient(method,url,req_body_byte)
+	c.SetConetentType("json")
+	return c,nil
+}
+func NewHttpClientWithFile(url string,filename string,fh io.Reader,size int64) (*http_client,error) {
+	body_buf := bytes.NewBufferString("")
+	body_writer := multipart.NewWriter(body_buf)
+	if _, err := body_writer.CreateFormFile("file", filename);err != nil {
+		return nil, err
+	}
+	boundary := body_writer.Boundary()
+	close_buf := bytes.NewBufferString(fmt.Sprintf("\r\n--%s--\r\n", boundary))
+	request_reader := io.MultiReader(body_buf,fh, close_buf)
+
+	hc := &http_client{}
+	hc.client = &http.Client{}
+	var err error
+	if hc.req, err = http.NewRequest(string(POST),	url,request_reader);err != nil {
+		return nil,err
+	}
+	hc.SetConetentType("multipart/form-data; boundary="+boundary)
+	hc.req.ContentLength = size + int64(body_buf.Len()) + int64(close_buf.Len())
+	return hc,nil
 }
 func (hc *http_client)DisableCompression() *http_client {
 	tr := &http.Transport{
