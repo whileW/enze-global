@@ -16,7 +16,7 @@ func init()  {
 
 	w := zapcore.AddSync(&lumberjack.Logger{
 		Filename:  filepath,
-		MaxSize:   1024, //MB
+		MaxSize:   10, //MB
 		LocalTime: true,
 		Compress:  true,
 	})
