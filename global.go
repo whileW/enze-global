@@ -26,3 +26,10 @@ func init() {
 	GVA_LOG = log.InitLog()
 	GVA_DB = db.NewDB()
 }
+
+func IsHaveRedis() bool {
+	if GVA_CONFIG.Setting.GetStringd("redis","") != ""{
+		return true
+	}
+	return false
+}
