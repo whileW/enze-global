@@ -155,11 +155,11 @@ func (hc *http_client)Do() ([]byte,error) {
 	if hc.content_type == "" {
 		hc.SetConetentType("json")
 	}
-	if hc.charset == "" {
-		hc.SetCharset("UTF-8")
+	if hc.charset != "" {
+		hc.content_type += " ;charset="+hc.charset
 	}
-	hc.SetHeader("Content-Type",hc.content_type+" ;charset="+hc.charset)
-
+	hc.SetHeader("Content-Type",hc.content_type)
+	hc.req.Header.Set("Content-Type",hc.content_type)
 	resp, err := hc.client.Do(hc.req)
 	if err != nil {
 		return nil,err
