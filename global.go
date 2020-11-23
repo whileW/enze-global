@@ -33,3 +33,9 @@ func IsHaveRedis() bool {
 	}
 	return false
 }
+func IsHaveETCD() bool {
+	if GVA_CONFIG.Setting.GetStringd("etcd","") != ""{
+		return true
+	}
+	return false
+}
