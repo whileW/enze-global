@@ -24,16 +24,18 @@ func Etcd()  {
 
 func RegisterByEtcdRPC(app_name string)  {
 	conf := global.GVA_CONFIG
-	register_by_etcd("/rpc/"+conf.SysSetting.Env+"/"+app_name+"/"+utils.RandomString(10),conf.SysSetting.Host+":"+conf.SysSetting.RpcAddr)
+	name := "/rpc/"+conf.SysSetting.Env+"/"+app_name+"/"+utils.RandomString(10)
+	register_by_etcd(name,conf.SysSetting.Host+":"+conf.SysSetting.RpcAddr)
 }
 func RegisterByEtcdHTTP(app_name string)  {
 	conf := global.GVA_CONFIG
-	register_by_etcd("/http/"+conf.SysSetting.Env+"/"+app_name+"/"+utils.RandomString(10),conf.SysSetting.Host+":"+conf.SysSetting.HttpAddr)
+	name := "/http/"+conf.SysSetting.Env+"/"+app_name+"/"+utils.RandomString(10)
+	register_by_etcd(name,conf.SysSetting.Host+":"+conf.SysSetting.HttpAddr)
 }
 
 func register_by_etcd(name,host string)  {
 	end_ch := make(chan int)
-	global.GVA_ETCD.PutLease(name,host,500,end_ch)
+	global.GVA_ETCD.PutLease(name,host,1,end_ch)
 	go func(chan<- int) {
 		select {
 		case <-end_ch:

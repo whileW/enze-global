@@ -25,3 +25,7 @@ go get github.com/whileW/enze-global
 ```
 配置读取:参考config/*
 ```
+
+## ETCD
+RegisterByEtcdHTTP|RegisterByEtcdRPC
+默认注册失效时间为1s
