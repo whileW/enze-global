@@ -24,11 +24,11 @@ func Etcd()  {
 
 func RegisterByEtcdRPC(app_name string)  {
 	conf := global.GVA_CONFIG
-	register_by_etcd(app_name+"/rpc/"+utils.RandomString(10),conf.SysSetting.Host+":"+conf.SysSetting.RpcAddr)
+	register_by_etcd("rpc/"+conf.SysSetting.Env+"/"+app_name+"/"+utils.RandomString(10),conf.SysSetting.Host+":"+conf.SysSetting.RpcAddr)
 }
 func RegisterByEtcdHTTP(app_name string)  {
 	conf := global.GVA_CONFIG
-	register_by_etcd(app_name+"/http/"+utils.RandomString(10),conf.SysSetting.Host+":"+conf.SysSetting.HttpAddr)
+	register_by_etcd("http/"+conf.SysSetting.Env+"/"+app_name+"/"+utils.RandomString(10),conf.SysSetting.Host+":"+conf.SysSetting.HttpAddr)
 }
 
 func register_by_etcd(name,host string)  {
