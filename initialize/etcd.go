@@ -35,7 +35,7 @@ func RegisterByEtcdHTTP(app_name string)  {
 
 func register_by_etcd(name,host string)  {
 	end_ch := make(chan int)
-	global.GVA_ETCD.PutLease(name,host,1,end_ch)
+	global.GVA_ETCD.PutLease(name,host,2,end_ch)
 	go func(chan<- int) {
 		select {
 		case <-end_ch:
