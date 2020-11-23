@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/whileW/enze-global"
 	"github.com/whileW/enze-global/initialize"
+	"time"
 )
 
 func main()  {
@@ -13,4 +14,5 @@ func main()  {
 	//global.GVA_ETCD.Delete("/enze/test2")
 	initialize.RegisterByEtcdHTTP("test")
 	fmt.Println(global.GVA_ETCD.GetWithPrefix(""))
+	time.Sleep(500*time.Second)
 }
