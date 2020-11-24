@@ -11,8 +11,25 @@ import (
 
 func Etcd()  {
 	conf := global.GVA_CONFIG
+
+	v,ch := conf.Setting.GetStringd_c("etcd","")
+
+	init_etcd(v)
+
+	go func() {
+		for {
+			select {
+			case <-ch:
+				global.GVA_LOG.Info("监听到etcd配置修改,重新初始化etcd")
+				init_etcd(conf.Setting.GetStringd("etcd",""))
+			}
+		}
+	}()
+}
+
+func init_etcd(endpoints string)  {
 	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   strings.Split(conf.Setting.GetString("etcd"),";"),
+		Endpoints:   strings.Split(endpoints,";"),
 		// Endpoints: []string{"localhost:2379", "localhost:22379", "localhost:32379"}
 		DialTimeout: 5 * time.Second,
 	})

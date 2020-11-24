@@ -14,6 +14,7 @@ require (
 	github.com/jinzhu/gorm v1.9.15
 	github.com/spf13/viper v1.7.1
 	go.uber.org/zap v1.16.0
+	golang.org/x/tools v0.0.0-20191112195655-aa38f8e97acc
 	google.golang.org/genproto v0.0.0-20200911024640-645f7a48b24f // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0

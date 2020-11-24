@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"github.com/spf13/viper"
 )
 
@@ -69,8 +70,9 @@ func (s *sysSetting)SetDefault()  {
 //其他设置
 type Settings map[string]Setting
 type Setting struct {
-	Key 		string
-	Value 		interface{}
+	Key 			string
+	Value 			interface{}
+	change_chan 	[]chan int
 }
 
 func (s *Settings)Get(key string) interface{} {
@@ -115,4 +117,48 @@ func (s *Settings)GetChildd(key string) *Settings {
 		return nil
 	}
 	return v.(*Settings)
+}
+
+func (s *Settings)Getd_c(key string,d interface{})(interface{},chan int) {
+	var value interface{}
+	change_chan := make(chan int)
+	if v, ok := (*s)[key]; ok {
+		value = v.Value
+		if change_chan == nil || len(v.change_chan) <= 0 {
+			v.change_chan = []chan int{}
+		}
+		v.change_chan = append(v.change_chan, change_chan)
+		(*s)[key] = v
+	} else {
+		value = d
+	}
+	return value,change_chan
+}
+func (s *Settings)GetIntd_c(key string,d int) (int,chan int) {
+	v,ch := s.Getd_c(key,d)
+	return v.(int),ch
+}
+func (s *Settings)GetStringd_c(key string,d string) (string,chan int) {
+	v,ch := s.Getd_c(key,d)
+	return v.(string),ch
+}
+func (s *Settings)GetBoold_c(key string,d bool) (bool,chan int) {
+	v,ch := s.Getd_c(key,d)
+	return v.(bool),ch
+}
+func (s *Settings)GetChildd_c(key string) (*Settings,chan int) {
+	v,ch := s.Getd_c(key,nil)
+	if v == nil {
+		return nil,ch
+	}
+	return v.(*Settings),ch
+}
+
+func (s *Setting)send_change()  {
+	if s.change_chan != nil {
+		for _,t := range s.change_chan {
+			fmt.Println("配置修改:",s.Key)
+			t<-1
+		}
+	}
 }

@@ -3,6 +3,7 @@ package initialize
 import (
 	"fmt"
 	"github.com/whileW/enze-global"
+	"github.com/whileW/enze-global/config"
 )
 
 func Db()  {
@@ -15,7 +16,21 @@ func Db()  {
 	conf := global.GVA_CONFIG
 	//dbs := global.GVA_DB
 
-	db_s := conf.Setting.GetChildd("db")
+	db_s,ch := conf.Setting.GetChildd_c("db")
+	init_db(db_s)
+	go func() {
+		for {
+			select {
+			case <-ch:
+				init_db(conf.Setting.GetChildd("db"))
+				global.GVA_LOG.Info("监听到数据库配置修改,重新初始化数据库")
+			}
+		}
+	}()
+	global.GVA_DB.IsInit = true
+}
+
+func init_db(db_s *config.Settings)  {
 	for k,_ := range *db_s {
 		switch k {
 		case "mysql":
@@ -28,5 +43,4 @@ func Db()  {
 			break
 		}
 	}
-	global.GVA_DB.IsInit = true
 }
