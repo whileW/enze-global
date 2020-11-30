@@ -1,9 +1,9 @@
 package test
 
 import (
+	"github.com/whileW/enze-global"
 	_ "github.com/whileW/enze-global/test/app"
 	"testing"
-	"github.com/whileW/enze-global"
 )
 
 func TestLog(t *testing.T)  {

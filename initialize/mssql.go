@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mssql"
 	"github.com/whileW/enze-global"
 	"github.com/whileW/enze-global/config"
+	"net/url"
 	"os"
 )
 
@@ -34,7 +35,7 @@ func InitMsSql(mssql_s *config.Settings) {
 }
 
 func init_mssql(username,password,path,db_name string,max_idle_conns,max_open_conns int,log_mode bool) *gorm.DB {
-	if db, err := gorm.Open("mssql", "sqlserver://"+username+":"+password+"@"+path+"?database="+db_name); err != nil {
+	if db, err := gorm.Open("mssql", "sqlserver://"+username+":"+url.QueryEscape(password)+"@"+path+"?database="+db_name); err != nil {
 		fmt.Println("MsSQL启动异常:"+err.Error())
 		os.Exit(0)
 		return nil
