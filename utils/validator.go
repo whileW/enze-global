@@ -32,6 +32,9 @@ func NotEmpty() string {
 func VerPhone() string {
 	return "verPhone"
 }
+func VerEmail() string{
+	return "verEmail"
+}
 
 // 小于入参(<) 如果为string array Slice则为长度比较 如果是 int uint float 则为数值比较
 func Lt(mark string) string {
@@ -97,6 +100,11 @@ func Verify(st interface{}, roleMap Rules) (err error) {
 					phone := val.String()
 					if !VerifyMobileFormat(phone) {
 						return errors.New(tagVal.Name + "未通过验证：手机号格式错误")
+					}
+				case v == "verEmail":
+					email := val.String()
+					if !VerifyEmailFormat(email) {
+						return  errors.New(tagVal.Name + "未通过验证：邮箱格式错误")
 					}
 				case compareMap[strings.Split(v, "=")[0]]:
 					if !compareVerify(val, v) {
