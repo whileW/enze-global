@@ -28,6 +28,10 @@ func RegisterRule(key string, rule Rules) (err error) {
 func NotEmpty() string {
 	return "notEmpty"
 }
+//验证手机号
+func VerPhone() string {
+	return "verPhone"
+}
 
 // 小于入参(<) 如果为string array Slice则为长度比较 如果是 int uint float 则为数值比较
 func Lt(mark string) string {
@@ -88,6 +92,11 @@ func Verify(st interface{}, roleMap Rules) (err error) {
 				case v == "notEmpty":
 					if isBlank(val) {
 						return errors.New(tagVal.Name + "值不能为空")
+					}
+				case v == "verPhone":
+					phone := val.String()
+					if !VerifyMobileFormat(phone) {
+						return errors.New(tagVal.Name + "未通过验证：手机号格式错误")
 					}
 				case compareMap[strings.Split(v, "=")[0]]:
 					if !compareVerify(val, v) {
