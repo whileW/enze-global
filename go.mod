@@ -10,7 +10,7 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-redis/redis/v8 v8.3.3
 	github.com/gogo/protobuf v1.3.1 // indirect
-	github.com/google/uuid v1.1.2 // indirect
+	github.com/google/uuid v1.1.2
 	github.com/jinzhu/gorm v1.9.15
 	github.com/spf13/viper v1.7.1
 	go.uber.org/zap v1.16.0
