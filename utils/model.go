@@ -9,4 +9,10 @@ type BaseModel struct {
 	DeletedAt *time.Time	`json:"deleted_at" sql:"index"`
 }
 
+type BaseModelV1 struct {
+	CreatedAt time.Time	`json:"created_at" gorm:"type:datetime"`
+	UpdatedAt time.Time	`json:"updated_at" gorm:"type:datetime"`
+	DeletedAt *time.Time	`json:"deleted_at" sql:"index"`
+}
+
 
