@@ -103,7 +103,7 @@ func DisableGinReqBodyLog() gin.HandlerFunc {
 
 type GinErrLog struct {}
 func (l *GinErrLog)Write(p []byte) (n int, err error) {
-	log.Error(string(p))
+	log.Errorw("gin error log","msg",string(p))
 	return len(p),nil
 }
 

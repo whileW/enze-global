@@ -42,10 +42,10 @@ func init()  {
 }
 
 func getFilePath() string {
-	path := utils.GetCurrentDirectory()
-	err := utils.CreateDir(path+ "/Log")
-	if err == nil {
-		path += "/Log"
+	path := utils.GetCurrentDirectory() + "Log"
+	err := utils.CreateDir(path)
+	if err != nil {
+		panic("创建日志文件夹失败："+err.Error())
 	}
 	logfile := path + "/" + utils.GetAppname() + ".log"
 	return logfile
