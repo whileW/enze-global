@@ -15,12 +15,12 @@ func init()  {
 }
 
 func InitOrm(conf *config.Config) *Orm {
-	//defer func() {
-	//	if r := recover(); r != nil {
-	//		fmt.Printf("初始化db失败：%s\n", r)
-	//		return
-	//	}
-	//}()
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Printf("初始化db失败：%s\n", r)
+			return
+		}
+	}()
 
 	db_s,ch := conf.Setting.GetChildd_c("db")
 	orm = NewOrm()
