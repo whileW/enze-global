@@ -3,7 +3,7 @@ package global
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/whileW/enze-global/log"
-	"github.com/whileW/enze-global/utils/resp"
+	"github.com/whileW/enze-global/middleware"
 )
 
 func InitGin() *gin.Engine {
@@ -17,10 +17,10 @@ func InitGin() *gin.Engine {
 	//开启gin
 	r := gin.Default()
 	// 跨域
-	r.Use(resp.Cors())
+	r.Use(middleware.Cors())
 	//捕获异常
 	r.Use(gin.Recovery())
 	//开启日志
-	r.Use(log.EnableGinLog())
+	r.Use(middleware.EnableGinLog())
 	return r
 }
