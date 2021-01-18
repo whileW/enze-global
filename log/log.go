@@ -8,7 +8,11 @@ import (
 	"os"
 )
 
-var log Log
+var log Loger
+
+func GetLoger() *Loger {
+	return &log
+}
 
 func init()  {
 	filepath := getFilePath()
@@ -37,8 +41,8 @@ func init()  {
 
 	core := zapcore.NewTee(allCore...)
 	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
-	log.log = logger.Sugar()
-	defer log.log.Sync()
+	log.zap = logger.Sugar()
+	defer log.zap.Sync()
 }
 
 func getFilePath() string {
@@ -51,6 +55,6 @@ func getFilePath() string {
 	return logfile
 }
 
-func InitLog() *Log {
+func InitLog() *Loger {
 	return &log
 }

@@ -3,18 +3,18 @@ package global
 import (
 	"github.com/go-redis/redis/v8"
 	"github.com/whileW/enze-global/config"
-	"github.com/whileW/enze-global/db"
 	"github.com/whileW/enze-global/etcd"
 	"github.com/whileW/enze-global/log"
+	"github.com/whileW/enze-global/orm"
 )
 
 var (
 	//配置
 	GVA_CONFIG	*config.Config
 	//日志
-	GVA_LOG		*log.Log
+	GVA_LOG		*log.Loger
 	//Db
-	GVA_DB 		*db.DB
+	GVA_DB 		*orm.Orm
 	//ETCD
 	GVA_ETCD	*etcd.Etcd
 	//REDIS
@@ -23,8 +23,8 @@ var (
 
 func init() {
 	GVA_CONFIG = config.InitConfg()
-	GVA_LOG = log.InitLog()
-	GVA_DB = db.NewDB()
+	GVA_LOG = log.GetLoger()
+	GVA_DB = orm.GetOrm()
 }
 
 func IsHaveRedis() bool {

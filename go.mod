@@ -18,6 +18,9 @@ require (
 	google.golang.org/genproto v0.0.0-20200911024640-645f7a48b24f // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
+	gorm.io/driver/mysql v1.0.3
+	gorm.io/driver/sqlserver v1.0.5
+	gorm.io/gorm v1.20.11
 	sigs.k8s.io/yaml v1.2.0 // indirect
 )
 
