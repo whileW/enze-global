@@ -2,8 +2,8 @@ package initialize
 
 import (
 	"fmt"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"gorm.io/gorm"
+	"gorm.io/driver/mysql"
 	"github.com/whileW/enze-global"
 	"github.com/whileW/enze-global/config"
 	"os"
@@ -32,9 +32,13 @@ func InitMySql(mysql_s *config.Settings) {
 		}
 	}
 }
-
+func GetConn(username,password,path,db_name,config string) string {
+	dsn := fmt.Sprintf("%s:%s@(%s)/%s?%s",username,password,path,db_name,config)
+	return dsn
+}
 func init_mysql(username,password,path,db_name,config string,max_idle_conns,max_open_conns int,log_mode bool) *gorm.DB {
-	if db, err := gorm.Open("mysql", username+":"+password+"@("+path+")/"+db_name+"?"+config); err != nil {
+	dsn := GetConn(username,password,path,db_name,config)
+	if db, err := gorm.Open(mysql.Open(dsn),&gorm.Config{}); err != nil {
 		fmt.Println("MySQL启动异常:"+err.Error())
 		os.Exit(0)
 		return nil

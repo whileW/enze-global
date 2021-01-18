@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -11,6 +10,11 @@ var conf Config
 func init()  {
 	//初始化settins
 	conf.Setting = Settings{}
+	InitConfg()
+}
+
+func GetConf() *Config {
+	return &conf
 }
 
 func InitConfg() *Config {
@@ -31,7 +35,6 @@ func (c *Config)AnalysisSetting(s map[string]interface{})  {
 	temp := &Settings{}
 	c.analysisSetting(&c.Setting,temp,s,0)
 	c.Setting = *temp
-	fmt.Println(c.Setting)
 }
 func (c *Config)analysisSetting(source *Settings,temp *Settings,s map[string]interface{},h int) bool {
 	is_change := false

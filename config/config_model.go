@@ -12,6 +12,14 @@ type Config struct {
 	vp     				*viper.Viper
 }
 
+var(
+	default_conf_file_path = "config.yaml"
+	default_env = "debug"
+	default_http_addr = "8080"
+	default_rpc_addr = "30010"
+	default_host = "127.0.0.1"
+)
+
 //系统设置
 type sysSetting struct {
 	//环境 - 默认debug
@@ -30,33 +38,36 @@ type sysSetting struct {
 }
 
 //设置默认配置文件地址
+func SetDefaultConfFileName(conf_path string)  {
+	default_conf_file_path = conf_path
+}
 func (s *sysSetting)SetDefaultConfFileName() {
 	if s.ConfFilePath == "" {
-		s.ConfFilePath = "config.yaml"
+		s.ConfFilePath = default_conf_file_path
 	}
 }
 //设置默认环境
 func (s *sysSetting)SetDefaultEnv() {
 	if s.Env == "" {
-		s.Env = "debug"
+		s.Env = default_env
 	}
 }
 //设置默认http监听地址
 func (s *sysSetting)SetDefaultHttpAddr() {
 	if s.HttpAddr == "" {
-		s.HttpAddr = "8080"
+		s.HttpAddr = default_http_addr
 	}
 }
 //设置默认rpc监听地址
 func (s *sysSetting)SetDefaultRpcAddr() {
 	if s.HttpAddr == "" {
-		s.HttpAddr = "30010"
+		s.HttpAddr = default_rpc_addr
 	}
 }
 //设置默认host
 func (s *sysSetting)SetDefaultHost()  {
 	if s.Host == "" {
-		s.Host = "127.0.0.1"
+		s.Host = default_host
 	}
 }
 //设置默认值
