@@ -1,6 +1,7 @@
 package global
 
 import (
+	"github.com/casbin/casbin/v2"
 	"github.com/go-redis/redis/v8"
 	"github.com/whileW/enze-global/config"
 	"github.com/whileW/enze-global/etcd"
@@ -19,6 +20,8 @@ var (
 	GVA_ETCD	*etcd.Etcd
 	//REDIS
 	GVA_REDIS	*redis.Client
+	//casbin
+	GVA_CASBIN 	*casbin.Enforcer
 )
 
 func init() {

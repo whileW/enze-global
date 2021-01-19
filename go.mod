@@ -3,6 +3,8 @@ module github.com/whileW/enze-global
 go 1.13
 
 require (
+	github.com/casbin/casbin/v2 v2.20.2 // indirect
+	github.com/casbin/gorm-adapter/v3 v3.0.5 // indirect
 	github.com/coreos/etcd v3.3.25+incompatible // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/etcd-io/etcd v3.3.25+incompatible
