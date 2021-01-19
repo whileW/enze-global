@@ -16,6 +16,11 @@ type BasePageModel struct {
 	Count		int					`json:"count"`
 }
 
+type BasePageModelV2 struct {
+	Data		interface{}			`json:"data"`
+	Count		int64				`json:"count"`
+}
+
 type ResCode int
 const (
 	SUCCESS 		ResCode			= 	0
