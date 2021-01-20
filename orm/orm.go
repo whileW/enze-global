@@ -5,6 +5,7 @@ import (
 	"github.com/whileW/enze-global/config"
 	"github.com/whileW/enze-global/log"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"os"
 )
 
@@ -53,7 +54,7 @@ func init_orm(s *config.Settings,adapter orm_inter) *gorm.DB {
 	db_name,config := s.GetString("db_name"),s.GetStringd("config","charset=utf8&parseTime=True&loc=Local")
 	max_idle_conns,max_open_conns := s.GetIntd("max-idle-conns",10),s.GetIntd("max-open-conns",10)
 	oc := &gorm.Config{
-		Logger:&log.GormLogger{},
+		Logger:log.GormLogger{}.LogMode(logger.Info),
 	}
 	if db, err := gorm.Open(adapter.Open(username,password,path,db_name,config),oc); err != nil {
 		fmt.Println("MySQL启动异常:"+err.Error())
